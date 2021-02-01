@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("button:eq(0)").click(function(){
+			
+			// $.getJson 함수 사용 (json 데이터 전용 함수)
+			$.getJSON("ex5_testjson.json", function(data) {
+				// data는 4개의 데이터를 가지고 있는 배열변수
+				var s="";
+				$.each(data, function(idx, item) {
+					s += "<b>" + idx + "번 데이터</b><br>";
+					s += "Term : " + item.term + "<br>";
+					s += "Part : " + item.part + "<br>";
+					s += "Definition : " + 
+						(item.definition==null?"no":item.definition) + "<br>";
+					s += "Quote : ";
+					if(item.quote == null){
+						s += "없음";
+					}
+					else {
+						$.each(item.quote, function(i, elt){
+							s += "[" + elt + "]";
+						});
+					}
+					s += "<br>Author : " + (item.author==null?"작가없음":item.author) + "<br>";
+					s += "<hr>";
+				});
+				$("#out1").html(s).hide().slideDown('slow');
+				
+			})
+		});
+		
+		$("button:eq(1)").click(function(){
+			
+			$.get("ex5_testxml.xml", function(data) {
+				var s = "";
+				$(data).find("bang").each(function(i, element) {
+					var n = $(this); 
+					//var n = $(ele); // 위와 같음
+					
+					s += "<b>" + i + "</b><br>";
+					s += "Name : " + n.attr("name") + "<br>";
+					s += "Part : " + n.attr("part") + "<br>";
+					s += "Msg : " + n.find("msg").text() + "<br>"; /* 속성은 attr, 태그 사이의 값은 text() */
+					s += "<br><hr>";
+				});
+				
+				$("#out2").html(s).hide().slideDown('slow');
+			})
+			
+		});
+	});
+</script>
+</head>
+<body>
+	<button type="button" class="btn btn-danger btn-lg">JSON 데이터 읽기</button>
+	<div id="out1"></div>
+	<hr>
+	<button type="button" class="btn btn-warning btn-lg">XML 데이터 읽기</button>
+	<div id="out2"></div>
+</body>
+</html>

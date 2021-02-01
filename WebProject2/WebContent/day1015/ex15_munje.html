@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<style type="text/css">
+	#one {
+		float: left;
+	}
+	
+	#rad {
+		margin-left: 60px;
+	}
+	
+	#one>img{
+		border: 2px solid gray;
+		margin-left: 10px;
+	}
+	
+	#bigImg{
+		
+	}
+	
+	#leftDown{
+		position: absolute;
+		left : 370px;
+		top : 550px;
+	}
+	
+	#rightDown{
+		position: absolute;
+		left : 450px;
+		top : 550px;
+	}
+	
+	#bimg {
+		width:300px;
+		border: 5px groove tomato;
+		position: absolute;
+		left : 300px;
+		top : 200px;
+	}
+</style>
+</head>
+<body>
+	<script type="text/javascript">
+		for(var i=1; i<9; i++){
+
+			var s = "<div id='one'><input type='radio' id='rad'><br><img src='../image2/0" + i + ".png'></div>";
+			document.write(s);
+		}
+		
+	</script>
+	
+	<div id="bigImg">
+		<img alt="" src="../image2/01.png" id="bimg">
+	</div>
+	
+	<img alt="" src="../image2/leftDown.gif" id="leftDown">
+	<img alt="" src="../image2/rightDown.gif" id="rightDown">
+	
+	<script type="text/javascript">
+		$("#leftDown").click(function(){
+			var l = parseInt($("#bimg").css("left"),10);
+			l -= 10;
+			
+			$("#bimg").css("left", l+"px");
+		});
+		
+		
+	</script>
+</body>
+</html>

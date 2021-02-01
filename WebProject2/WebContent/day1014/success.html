@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+
+	window.onload=function(){
+		if(localStorage.id != undefined){
+			text.innerHTML = localStorage.id + "님이 로그인하였습니다";
+		}
+	}
+</script>
+</head>
+<body>
+	<h2 id="text">success</h2>
+	<a href="javascript:history.back()">다시 로그인하기</a>
+</body>
+</html>

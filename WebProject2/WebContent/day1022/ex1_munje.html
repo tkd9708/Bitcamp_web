@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#btn1").click(function(){
+			
+			$.getJSON("../day1021/ex6_munjejson.json", function(data) {
+				var s = "<h3>Json 데이터 출력</h3>";
+				
+				// data가 배열 형태로 넘어온다
+				$.each(data, function(i, item) {
+					s += (i+1) + "번째 데이터<br>";
+					s += "Name : " + item.name + "<br>";
+					s += "Hobby : ";
+					if(item.hobby == null){
+						s += "취미없음";
+					}
+					else {
+						// 취미는 배열형태이므로 역시 each로 반복해서 출력
+						$.each(item.hobby, function(i, h){
+							s += "[" + h + "]&nbsp;";
+						});
+					}
+					s += "<br>Age : " + item.age + "<br>";
+					s += "Kor : " + (item.score.kor == null? "미시험" : item.score.kor + "점<br>");
+					s += "Eng : " + (item.score.eng == null? "미시험" : item.score.eng + "점<br>");
+					s += "Mat : " + (item.score.mat == null? "미시험" : item.score.mat + "점<br>");
+					s += "<br>";
+					
+				
+					s += "<hr>";
+				});
+				
+				$("#out").html(s);
+			});
+		});
+		
+		$("#btn2").click(function(){
+
+			$.get("../day1021/ex6_munjexml.xml", function(data) {
+				var s = "<h3>XML 데이터 출력</h3>";
+
+				$(data).find("data").each(function(i, ele){
+					var row = $(ele);
+					s += "아이디 : " + row.attr("id") + "<br>";
+					s += "이름 : " + row.attr("name") + "<br>";
+					s += "제목 : " + row.find("subject").text() + "<br>";
+					s += "이미지명 : " + row.find("photo").text() + "<br>";
+					s += "<img src='" + row.find("photo").text() + "' style='max-width:150px;'><br>";
+					s += "<hr>";
+				});
+				
+				$("#out").html(s);
+			});
+			
+		});
+	});
+</script>
+</head>
+<body>
+	<button type="button" id="btn1" class="btn btn-danger btn-sm" style="width: 150px;">Json 데이터 읽기</button>
+	<button type="button" id="btn2" class="btn btn-info btn-sm" style="width: 150px;">XML 데이터 읽기</button>
+	<hr>
+	<div id="out" class="alert alert-default">Hello</div>
+</body>
+</html>

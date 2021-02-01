@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	div.imggame {
+		position: absolute;
+		left: 200px;
+		top: 100px;
+		text-align: center;
+	}
+	
+	div.imggame button {
+		border: 3px groove gray;
+		width: 120px;
+		height: 30px;
+		border-radius: 100px;
+	}
+	
+	div.imggame button:hover {
+		background-color: red;
+		color: yellow;
+		cursor: pointer;
+	}
+</style>
+</head>
+<body>
+	<div class="imggame">
+		<button type="button" id="btnLarge">점점더크게</button>
+		<button type="button" id="btnSmall">점점더작게</button>
+		<br><br>
+		<!-- <img src="../image/1.JPG" width="300" id="myimg"> --> <!-- #1 -->
+		<img src="../image/1.JPG" style="width: 300px" id="myimg"> <!-- #2 -->
+	</div>
+
+<script type="text/javascript">
+	var myimg=document.getElementById("myimg");
+	
+	document.getElementById("btnLarge").onclick=function(){
+		//alert("Large");
+		
+	// #1 width 변경
+		//var w=myimg.getAttribute("width"); // #1 width 구하기
+		//w += 10; // 문자열로 타입이 정해져서 30010이 된다
+		//alert(typeof(w)); // 내부적으로 지정된 타입 확인
+		//w = parseInt(w) + 10;
+		
+	// #2 width 변경	
+		var w=myimg.style.width; // 스타일쉬트로 너비를 준 경우 : #2 width 구하기
+		w = parseInt(w,10) + 10; // 10진수값만 정수타입으로 얻기
+		//alert(w);
+		myimg.style.width = w + "px";
+
+		// 이미지 크기 변경
+		myimg.setAttribute("width", w);
+	}
+	document.getElementById("btnSmall").onclick=function(){
+		//alert("small");
+		
+		var w = parseInt(myimg.getAttribute("width"));
+		w -= 10;
+		myimg.setAttribute("width", w);
+	}
+	
+</script>
+</body>
+</html>

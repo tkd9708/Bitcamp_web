@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload = function(){
+		var imgarray = new Array();
+		imgarray[0] = "../image2/08.png";
+		imgarray[1] = "../image2/09.png";
+		imgarray[2] = "../image2/10.png";
+		imgarray[3] = "../image2/ani12.gif";
+		imgarray[4] = "../image2/ani08.gif";
+		
+		document.getElementById("btn").onclick = function(){
+			//alert(myimg.length);
+			for(i=0; i<myimg.length; i++){
+				// 태그에서 name이 같을 경우 스크립트에서는 배열로 인식
+				myimg[i].src = imgarray[i];
+			}
+		}
+		
+		document.getElementById("btn2").onclick = function(){
+			// 랜덤함수
+			//alert(Math.random()); // 0.0xxx ~ 0.9xxxx
+			//alert(parseInt(Math.random()*10)); // 0 ~ 9 정수값
+			//alert(parseInt(Math.random()*10) + 1); // 1 ~ 10 정수값
+			
+			for(i=0; i<myimg.length; i++){
+				myimg[i].src = imgarray[parseInt(Math.random()*5)];
+			}
+		}
+	}
+</script>
+</head>
+<body>
+	<button type="button" id="btn">이미지 변경</button>
+	<button type="button" id="btn2">이미지 변경(랜덤)</button>
+	<br><br>
+	<img src="../image2/01.png" width="130" name="myimg">
+	<img src="../image2/02.png" width="130" name="myimg">
+	<img src="../image2/03.png" width="130" name="myimg">
+</body>
+</html>

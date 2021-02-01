@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+	#btn {
+		margin-left: 300px;
+	}
+	
+	#btn span  {
+		font-size: 30px;
+		margin-left: 20px;
+		cursor: pointer;
+	}
+	
+	#btn span:hover {
+		color: red;
+	}
+	
+	#out {
+		margin-top: 50px;
+		margin-left: 100px;
+		width: 700px;
+	}
+	
+	.last_img {
+		position: absolute;
+		left: 450px;
+		border: 1px solid gray;
+		padding: 10px;
+	}
+	
+	.first_img {
+		width: 200px;
+		border: 1px solid gray;
+		padding: 10px;
+	}
+	
+	.first_span {
+		float: left;
+		margin: 10px;
+	}
+	
+</style>
+<script type="text/javascript">
+	$(function(){
+		
+		$("#btn span:first").click(function(){
+			$.ajax({
+				type: "get",
+				url: "boardtoxml.jsp",
+				dataType: "xml",
+				success: function(data){
+					var s = "";
+					$(data).find("board").each(function(i, element){
+						s += "<span class='first_span'><img src='../image2/" + $(element).find("photo").text() + "' class='first_img'><br>";
+						s += "<h5><b>#" + $(element).attr("num") + "&nbsp;&nbsp;" + $(element).find("subject").text() + "</b></h5>";
+						s += "<h6 style='opacity:0.5'><b>" + $(element).attr("writer") + "</b></h6>";
+						s += "<h6 style='opacity:0.5'>"  + $(element).find("writeday").text() + "</h6>";
+						s += "</span>";
+					});
+					
+					
+					s += "<hr>";
+					$("#out").html(s);
+				}
+			});
+		});
+		
+		$("#btn span:last").click(function(){
+			$.ajax({
+				type: "get",
+				url: "boardtoxml.jsp",
+				dataType: "xml",
+				success: function(data){
+					var s = "";
+					$(data).find("board").each(function(i, element) {
+						s += "<h3><b>#" + $(element).attr("num") + "&nbsp;&nbsp;" + $(element).find("subject").text() + "</b>";
+						s += "<img src='../image2/" + $(element).find("photo").text() + "' class='last_img'></h3><br>";
+						s += "<h5 style='opacity:0.5; margin-left:10px'>" + $(element).find("content").text() + "</h5><br>";
+						s += "<h6><b>" +  $(element).attr("writer") + "</b>&nbsp;&nbsp;*&nbsp;&nbsp;" 
+							+ $(element).find("writeday").text() + "</h6><br>";
+						
+						s += "<hr>";
+					});
+					
+					$("#out").html(s);
+				}
+			});
+		});
+		
+	});
+</script>
+</head>
+<body>
+	<div id="btn">
+		<span class="glyphicon glyphicon-th-large"></span>
+		<span class="glyphicon glyphicon-th-list"></span>
+	</div>
+	<div id="out"></div>
+</body>
+</html>

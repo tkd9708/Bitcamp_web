@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<style type="text/css">
+	.imge {
+		position: absolute;
+		top: 100px;
+		left: 100px;
+		width: 300px;
+	}
+	
+	.imge img{
+		width: 300px;
+	}
+</style>
+<script type="text/javascript">
+	$(function(){
+		// 일단 첫번째 사진이 나오도록 한다
+		$(".imge").hide(); // 모든 사진 숨기기
+		$(".imge:first").fadeIn('slow'); // 첫번째 사진을 fade효과로 나타나도록 한다
+		
+		$("a.imge").click(function(e){
+			e.preventDefault(); // 기본이벤트 무효화 >> 사진 클릭 event 제거(href 기능)
+			//alert("test");
+			//alert($(this).index()); // 첫번째 요소값 : 1 / 마지막은 5
+			$(this).fadeIn('slow');
+			
+			// 마지막 사진에서 클릭시 다시 첫번째 사진으로
+			// 마지막이 아닐경우 다음 사진으로
+			//var next = $(this).index() == 5 ? $('.imge:first'):$(this).next();
+			
+			if($(this).index() == 5)
+				alert("마지막 사진입니다"); 
+			else{
+				// 현재 사진은 사라지게 한다
+				$(this).fadeOut('slow');
+				// 다음사진이 나오도록 한다
+				$(this).next().fadeIn('slow');
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<h2>이미지를 클릭하면 다음사진이 계속 나옵니다</h2>
+	<a href="../image/2.JPG" class="imge">
+		<img src="../image/2.JPG">
+	</a>
+	<a href="" class="imge">
+		<img src="../image/5.JPG">
+	</a>
+	<a href="" class="imge">
+		<img src="../image/26.JPG">
+	</a>
+	<a href="" class="imge">
+		<img src="../image/30.JPG">
+	</a>
+	<a href="" class="imge">
+		<img src="../image/17.JPG">
+	</a>
+</body>
+</html>

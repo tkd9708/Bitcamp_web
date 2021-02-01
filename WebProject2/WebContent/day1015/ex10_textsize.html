@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo&family=Gaegu:wght@300&family=Nanum+Gothic&display=swap" rel="stylesheet">
+</head>
+<body>
+	<b>글꼴 선택 : </b>
+	<select id="selfont">
+		<option>Nanum Myeongjo</option>
+		<option>Gaegu</option>
+		<option>Nanum Gothic</option>
+	</select>
+	<button type="button" id="btndown">점점작게</button>
+	<button type="button" id="btnup">점점크게</button>
+	<input type="color" id="mycolor">
+	<hr>
+	<p>
+		오늘 우리는 제이쿼리를 공부중입니다.
+	</p>
+	
+	<script type="text/javascript">
+		// p태그에 select의 첫 옵션글꼴로 적용
+		$("p").css("font-family", "Nanum Myeongjo");
+		
+		// 버튼에 스타일 지정 
+		$("button").hover(function(){
+			// 마우스오버 함수
+			$(this).css({
+				"border" : "2px solid gray",
+				"background-color" : "pink"
+			});
+		}, function(){
+			// 마우스아웃 함수
+			$(this).css({
+				"border" : "1px solid gray",
+				"background-color" : "#ffc"
+			});
+		});
+		
+		// 점점크게
+		$("#btnup").click(function(){
+			// 현재 p태그의 글자 크기를 얻는다
+			var fontsize = parseInt($("p").css("font-size"), 10);
+			fontsize += 3;
+			
+			// 글자크기 변경
+			$("p").css("font-size", fontsize + "px");
+		});
+		
+		// 점점작게
+		$("#btndown").click(function(){
+			// 현재 p태그의 글자 크기를 얻는다
+			var fontsize = parseInt($("p").css("font-size"), 10);
+			fontsize -= 3;
+			
+			// 글자크기 변경
+			$("p").css("font-size", fontsize + "px");
+		});
+		
+		$("#selfont").change(function(){
+			$("p").css("font-family", $(this).val());
+		});
+		
+		$("#mycolor").change(function(){
+			$("p").css("color", $(this).val());
+		});
+	</script>
+</body>
+</html>

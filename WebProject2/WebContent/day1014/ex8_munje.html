@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	<div></div>
+	
+	<script type="text/javascript">
+		// div의 속성 변경 (크기, 테두리선, 마진 등등 알아서주기)
+		var arr=["02.png", "03.png", "04.png", "05.png", "01.png"];
+		
+		$("div").css({
+			"width" : "200px",
+			"height" : "200px",
+			"border" : "2px solid gray",
+			"cursor" : "pointer",
+			"float" : "left",
+			"margin-right" : "10px"
+		});
+		
+		// each문으로 div의 배경 이미지를 넣으세요 (배열의 이미지로)
+		$("div").each(function(index){
+			$(this).css({
+			
+				"background-image":"url(../image2/" + arr[index] + ")",
+				"background-repeat":"no-repeat",
+				"background-size": "150px 150px",
+				"background-position" : "center"
+			});
+		});
+		
+		// div를 클릭하면 border를 굵기 10의 굵은선으로 변경, 선택안한건 원래 border로 주기
+		$("div").click(function(){
+			$("div").css("border", "2px solid gray");
+			$(this).css("border", "10px groove tomato");
+		});
+	</script>
+</body>
+</html>

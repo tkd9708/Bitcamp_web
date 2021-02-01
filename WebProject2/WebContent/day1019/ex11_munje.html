@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<style type="text/css">
+	table {
+		border: 1px solid black;
+	}
+	
+	table th, table td {
+		border: 1px solid gray;
+	}
+	
+	#addBtn, #allBtn {
+		margin-left: 70px;
+		margin-top: 30px;
+		border: 3px solid gray;
+		background-color: white;
+	}
+	
+	#add, #all {
+		border: 1px dotted gold;
+		padding: 20px;
+		margin-top: 20px;
+		margin-left: 20px;
+		width: 350px;
+		text-align: center;
+	}
+	
+	input {
+		margin-top: 10px;
+	}
+	
+	#save {
+		margin-top: 30px;
+	}
+	
+</style>
+<script type="text/javascript">
+	$(function(){
+		var arr = new Array();
+		
+		$("#add").hide();
+		$("#all").hide();
+		
+		$("#addBtn").click(function(){
+			$("#all").hide();
+			$("#add").slideDown('slow');
+		});
+		
+		$("#allBtn").click(function(){
+			$("#add").hide();
+			$("#all").slideDown('slow');
+			
+			var s="";
+			s += "<table><tr><th width='100' align='center'>이름</th>";
+			s += "<th width='100' align='center'>나이</th>";
+			s += "<th width='200' align='center'>주소</th></tr>";
+			$.each(arr, function(index, item){
+					s+="<tr><td width='100' align='center'>" + item.name + "</td><td width='100' align='center'>";
+					s += item.age + "</td><td width='200' align='center'>" + item.addr + "</td></tr>";	
+					
+			});
+			s += "</table>";
+			$("#all").html(s);
+		});
+		
+		$("#save").click(function(){
+			var data = new Object();
+			data.name = $("#name").val();
+			data.age = $("#age").val();
+			data.addr = $("#addr").val();
+			arr.push(data);
+			
+			$("#name").val("");
+			$("#age").val("");
+			$("#addr").val("");
+			
+		});
+	});
+		
+		
+	</script>
+</head>
+<body>
+	<button type="button" id="addBtn"><b>데이터 추가</b></button>
+	<button type="button" id="allBtn"><b>전체 데이터 출력</b></button>
+	
+	<div id="add">
+		<fieldset>
+			<legend><h3>데이터 입력</h3></legend>
+			<form action="#">
+			이름  :  <input type="text" id="name" required="required"><br>
+			나이  :  <input type="text" id="age" required="required"><br>
+			주소  :  <input type="text" id="addr" required="required"><br>
+			<!-- <button type="button" id="save" >데이터 추가</button> -->
+			<button type="submit" id="save">데이터 추가</button>
+		</form>
+		</fieldset>
+		
+	</div>
+	
+	<div id="all">
+	</div>
+	
+	
+</body>
+</html>

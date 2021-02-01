@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	select {
+		position: absolute;
+		left: 350px;
+	}
+	
+	#btn, #btn2, #btn3 {
+		margin-top: 10px;
+	}
+</style>
+<script type="text/javascript">
+	window.onload=function(){
+		m = document.getElementById("mymusic");
+		btn = document.getElementById("btn");
+		btn2 = document.getElementById("btn2");
+		btn3 = document.getElementById("btn3");
+		
+
+		/* m.onloadedmetadata = function() {
+			var tot = parseInt(this.currentTime);
+			var h = parseInt(tot/60);
+			var m = tot%60;
+			var s = (h<10?"0":"") + h + ":" + (m<10?"0":"") + m;
+			
+			var duration = parseInt(this.duration);
+			var h = parseInt(duration/60);
+			var m = duration%60;
+			
+			s += " (총시간 " + (h<10?"0":"") + h + ":" + (m<10?"0":"") + m + ")";
+			document.getElementById("t").innerHTML = s;
+		}  */
+		
+		// 이벤트 호출
+		btn.addEventListener("click", toggleMusic, false);
+		btn2.addEventListener("click", init, false);
+		btn3.addEventListener("click", gonext, false);
+		
+		m.addEventListener("timeupdate", show, false);
+		
+		
+		/* 첫 곡 지정을 위해 onload때 설정 
+		sel = document.getElementById("sel");
+		m.src="../media/" + sel.value; // 초기값으로 지정된 첫곡을 src에 준다
+		song.innerHTML = sel.value;
+		
+		// 음악송 변경
+		sel.onchange = function() {
+			m.src = "../media/" + this.value;
+			song.innerHTML = this.value;
+			btn.click(); // 음악재생 버튼 클릭한 효과
+		} */
+	}
+	
+	// 사용자함수들 추가
+	function toggleMusic(){
+		if(m.paused){
+			m.play();
+			btn.innerHTML="일시정지";
+		}
+		else{
+			m.pause();
+			btn.innerHTML="음악재생";
+		}
+	}
+	
+	function init() {
+		m.currentTime=0;
+	}
+	
+	function gonext() {
+		m.currentTime+=2;
+	}
+	
+	function show() {
+		//document.getElementById("t").innerHTML = this.currentTime;
+		
+		var tot = parseInt(this.currentTime);
+		var h = parseInt(tot/60);
+		var m = tot%60;
+		var s = (h<10?"0":"") + h + ":" + (m<10?"0":"") + m;
+		
+		// 총 play 시간
+		/* var duration = parseInt(this.duration);
+		var h = parseInt(duration/60);
+		var m = duration%60;
+		
+		s += " (총시간 " + (h<10?"0":"") + h + ":" + (m<10?"0":"") + m + ")";
+		document.getElementById("t").innerHTML = s; */
+		
+		if(!isNaN(duration)){
+			console.log(this.duration);
+			var h2 = parseInt(duration/60);
+			var m2 = duration%60;
+			s += " (총시간 " + (h2<10?"0":"") + h2 + ":" + (m2<10?"0":"") + m2 + ")";
+		}
+		
+	}
+	
+	
+</script>
+</head>
+<body>
+	<h2 id="song"></h2>
+	<audio src="" id="mymusic" controls="controls"></audio>
+	<select id="selmusic" onchange="musicChange()" size = "10">
+	
+		<script type="text/javascript">
+			var mArray = new Array();
+		
+			mArray[0] = '001-박효신-야생화.mp3';
+			mArray[1] = '005-임창정-흔한 노래.mp3';
+			mArray[2] = '011-백지영-총맞은것처럼 (1).mp3';
+			mArray[3] = '01-서영은-꽃이 진다 (후궁 제왕의 첩 ver.).mp3';
+			mArray[4] = '022-린-보고 싶어...운다.mp3';
+			mArray[5] = '027-에일리-노래가 늘었어.mp3';
+			mArray[6] = '045. 임창정 - 그때 또 다시(again).mp3';
+			mArray[7] = '08. 버스커 버스커 - 동경소녀.mp3';
+			mArray[8] = '085-휘성-결혼까지 생각했어.mp3';
+			mArray[9] = '086-바이브-술이야.mp3';
+		
+			var s = "<option selected value='../media/" + mArray[0] + "'>" + mArray[0] + "</option>";
+			document.write(s);
+			
+			document.getElementById("song").innerHTML = mArray[0];
+			m = document.getElementById("mymusic");
+			m.src = selmusic.value; 
+			
+			for(i=1; i<mArray.length; i++){
+
+				s = "<option value='../media/" + mArray[i] + "'>" + mArray[i] + "</option>";
+				document.write(s);
+			}
+			
+			function musicChange(){
+				var sel = document.getElementById("selmusic");
+				document.getElementById("song").innerHTML = sel.options[sel.selectedIndex].text;
+				
+				m.src = selmusic.value;
+				
+			}
+			
+		</script>
+	</select>
+	<br>
+	<button id="btn">음악재생</button>
+	<button id="btn2">|&lt;</button>
+	<button id="btn3">&gt;&gt;</button> <!--  '>>' 모양 -->
+	<div id="t" style="font-size: 20px">00:00 (총시간 00:00)</div>
+	
+</body>
+</html>

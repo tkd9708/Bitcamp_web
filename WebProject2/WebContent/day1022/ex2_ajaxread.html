@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	$(function(){
+		$("#img1").hide();
+		$("#btn1").click(function(){
+			// 어제 ex5 json 데이터 읽어오기
+			$.ajax({
+				type: "get",
+				url: "../day1021/ex5_testjson.json",
+				dataType: "json",
+				success: function(data){
+					var s = "<b>json 데이터 출력</b><br>";
+					$.each(data, function(i, item) {
+						s += "<h3>" + (i+1) + "번째</h3>";
+						s += "Term : " + item.term + "<br>";
+						s += "Part : " + item.part + "<br>";
+						s += "Definition : ";
+						if(item.definition == null){
+							s += "없음";
+						}
+						else {
+							s += item.definition;
+						}
+						s += "<br>Quote : ";
+						
+						if(item.quote == null){
+							s += "없음";
+						}
+						else {
+							$.each(item.quote, function(i, elt) {
+								s += "[" + elt + "]";
+							});
+						}
+						
+						s += "<br>Author : ";
+						
+						if(item.author == null){
+							s += "없음";
+						}
+						else {
+							s += item.author;
+						}
+						
+						
+					});
+					$("#out").html(s);
+				},
+				statusCode: {
+					404: function(){
+						alert("json 파일을 찾을 수 없습니다")
+					}, 
+					500: function(){
+						alert("서버오류.. 코드를 다시 한번 살펴보세요");
+					}
+				}
+			}).done(function(){
+				// 데이터 읽기가 모두 끝난후 실행
+				$("#img1").slideDown('slow');
+				setTimeout(function() {
+					$("#img1").slideUp('slow');
+				}, 2000);
+			});
+		});
+		
+		$("#btn2").click(function(){
+			$.ajax({
+				type: "get",
+				url: "../day1021/ex5_testxml.xml",
+				dataType: "xml",
+				success: function(data){
+					var s = "<h3>XML 데이터 읽기</h3>";
+					s += "제목 : " + $(data).find("title").text() + "<br>";
+					$(data).find("bang").each(function(i, item){
+						s += "방송사 : " + $(item).attr("name") + "<br>";
+						s += "part : " + $(item).attr("part") + "<br>";
+						s += "msg : " + $(item).find("msg").text() + "<br>";
+						s += "<hr>";
+					});
+					
+					$("#out").html(s);
+				},
+				statusCode: {
+					404: function(){
+						alert("json 파일을 찾을 수 없습니다")
+					}, 
+					500: function(){
+						alert("서버오류.. 코드를 다시 한번 살펴보세요");
+					}
+				}
+				
+			});
+			
+		});
+	});
+</script>
+</head>
+<body>
+<h1>jQuery이 ajax 함수를 이용해서 json & xml 데이터 읽기</h1>
+	<button type="button" id="btn1" class="btn btn-danger btn-sm" style="width: 150px;">Json 데이터 읽기</button>
+	<button type="button" id="btn2" class="btn btn-info btn-sm" style="width: 150px;">XML 데이터 읽기</button>
+	<hr>
+	<img src="../image2/image_01.png" id="img1">
+	<div id="out" class="alert alert-default">Hello</div>
+</body>
+</html>
