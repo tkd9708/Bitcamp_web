@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+</style>
+</head>
+<body>
+	숫자입력 : 
+	<input type="text" id="su" placeholder="숫자입력">
+	<button type="button" id="new_ran">새로운 난수 구하기</button>
+	<div id="out"></div>
+	<script type="text/javascript">
+		var txt = document.getElementById("su");
+		var out = document.getElementById("out");
+		var ran = parseInt((Math.random()*100)+1);
+		var count = 1;
+		
+		alert(ran);
+		
+		document.getElementById("new_ran").onclick = function(){
+			out.innerHTML += "<br>** 새로운 난수를 생성하였습니다 ** <br>";
+			txt.value="";
+			ran = parseInt((Math.random()*100)+1);
+			count=1;
+			alert(ran);
+		}
+		
+		txt.onkeyup = function(e){
+			if(e.keyCode == 13){
+				if(count <= 10){
+					if(txt.value > ran){
+						out.innerHTML += (count++) + "번째 결과 >> " + txt.value + "보다 작습니다<br>";
+					}
+					else if(txt.value < ran){
+						out.innerHTML += (count++) + "번째 결과 >> " + txt.value + "보다 큽니다<br>";
+					}
+					else{
+						out.innerHTML += "** 축하합니다. 정답은 " + ran + "입니다 **<br>";
+					}
+				}
+				else {
+					out.innerHTML += "---- 다음기회에... ---<br>";
+				}
+				txt.value = "";
+			}
+			
+			
+		}
+	</script>
+</body>
+</html>

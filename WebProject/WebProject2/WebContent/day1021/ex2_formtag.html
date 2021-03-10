@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<img alt="" src="../image/13.JPG" class="img-circle" style="width: 100px;">
+	<img alt="" src="../image2/image_01.png" class="img-thumbnail" style="width: 100px;">
+	
+	<div class="alert alert-success" style="width: 500px;">
+		Get 방식의 폼데이터 읽기
+	</div>
+	<form action="readdata1.jsp" method="get" class="form-inline">
+		<table class="table table-bordered" style="width: 300px;">
+			<tr>
+				<th style="width: 100px; background-color: pink">이름</th>
+				<td>
+					<input type="text" name="name" class="form-control input-sm">
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 100px; background-color: pink">성별</th>
+				<td>
+					<div class="form-group"> <!-- 가로방향 나열 -->
+						<input type="radio" class="form-control" value="남자" name="gender" checked="checked">남자
+						<input type="radio" class="form-control" value="여자" name="gender">여자
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<button type="submit" class="btn btn-success">서버전송</button>
+					<button type="reset" class="btn btn-info">값 초기화</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+	
+	<hr>
+	<div class="alert alert-danger" style="width: 300px;">
+		Post 방식의 폼데이터 읽기
+	</div>
+	<form action="readdata2.jsp" method="post" class="form-inline">
+		<table class="table table-bordered" style="width: 300px;">
+			<tr>
+				<th style="width: 100px; background-color: pink">이름</th>
+				<td>
+					<input type="text" name="name" class="form-control input-sm">
+				</td>
+			</tr>
+			<tr>
+				<th style="width: 100px; background-color: pink">성별</th>
+				<td>
+					<div class="form-group"> <!-- 가로방향 나열 -->
+						<input type="radio" class="form-control" value="남자" name="gender" checked="checked">남자
+						<input type="radio" class="form-control" value="여자" name="gender">여자
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<button type="submit" class="btn btn-success">서버전송</button>
+					<button type="reset" class="btn btn-info">값 초기화</button>
+				</td>
+			</tr>
+		</table>
+	</form>
+</body>
+</html>

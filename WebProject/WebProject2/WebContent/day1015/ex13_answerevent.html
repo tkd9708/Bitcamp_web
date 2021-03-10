@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+	<span class="answer">
+		<div>댓글1</div>
+		<ul>
+			<li>안녕</li>
+			<li>밥먹자</li>
+		</ul>
+	</span>
+	<br>
+	<span class="answer">
+		<div>댓글2</div>
+		<ul>
+			<li>공부하자</li>
+			<li>뭐하니</li>
+		</ul>
+	</span>
+	<br>
+	<span class="answer">
+		<div>댓글3</div>
+		<ul>
+			<li>제이쿼리</li>
+			<li>자바스크립트</li>
+		</ul>
+	</span>
+	
+	<script type="text/javascript">
+		// 댓글 1,2,3만 남고 나머지는 모두 숨기기(hide() 사용)
+		$("span.answer").find('ul').hide();
+		
+		// 댓글 1,2,3 부분은 커서모양, 굵게 속성으로 css적용
+		$("span.answer").css({
+			"cursor": "pointer",
+			"text-weight": "bold"
+		});
+		
+		// 댓글을 클릭하면 해당 댓글만 열리도록 하기
+		/* $("span").each(function(index){
+			$("span:eq(" + index + ")").click(function(){
+				$("span:eq(" + index + ")" + ".answer").find('ul').show();
+			});
+		}); */
+		
+		$("span.answer").click(function(){
+			$("span.answer").find('ul').hide(3000);
+			//$(this).find('ul').show();
+			//$(this).find('ul').show('slow');
+			//$(this).find('ul').show('fast');
+			$(this).find('ul').show(3000);
+		});
+		
+	</script>
+</body>
+</html>

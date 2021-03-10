@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+	button {
+		margin-top: 20px;
+		margin-left: 20px;
+	}
+	
+	div {
+		margin: 10px;
+		
+	}
+</style>
+<script type="text/javascript">
+	$(function(){
+		$("button:eq(0)").click(function(){
+			$.getJSON("ex6_munjejson.json", function(data) {
+				var s="";
+				
+				$.each(data, function(i, elt) {
+					s += "<b><" + (i+1) + "번 데이터></b><br>";
+					s += " * Name : " + elt.name + "<br>";
+					s += " * Hobby : ";
+					if(elt.hobby == null){
+						s += "없음";
+					}
+					else{
+						$.each(elt.hobby, function(idx, item) {
+							s += (idx+1) + "." + item + " ";
+						});
+					}
+					s += "<br> * Age : " + elt.age + "<br>";
+					s += " * Score : ";
+
+					//s += "[Korea : " + JSON.stringify(elt.score.kor) + "점]";
+					s += "[Korea : " + elt.score.kor + "점]";
+					s += ", [English : " + JSON.stringify(elt.score.eng) + "점]";
+					if(JSON.stringify(elt.score.mat) != null){
+						s += ", [Math : " + JSON.stringify(elt.score.mat) + "점]";
+					}
+					 
+					s += "<br><hr>";
+				});
+				$("#json_out").html(s).hide().slideDown('slow');
+			});
+		});
+		
+		$("button:eq(1)").click(function(){
+			$.get("ex6_munjexml.xml", function(data) {
+				var s = "";
+				$(data).find("data").each(function(i){
+					var n = $(this);
+					
+					s += "<b><" + (i+1) + "번 데이터></b><br>";
+					s += " * ID : " + n.attr("id") + "<br>";
+					s += " * Name : " + n.attr("name") + "<br>";
+					s += " * Subject : " + n.find("subject").text() + "<br>";
+					s += " * Img : "; // + n.find("photo").text() + "<br>";
+					s += "<img src='" + n.find("photo").text() + "' style='border: 1px dotted gray'><br>"
+					
+					s += "<br><hr>";
+				});
+				$("#xml_out").html(s).hide().slideDown('slow');
+				
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<button type="button" class="btn btn-danger btn-lg">json</button>
+	<div id="json_out"></div>
+	<hr>
+	<button type="button" class="btn btn-warning btn-lg">xml</button>
+	<div id="xml_out"></div>
+</body>
+</html>

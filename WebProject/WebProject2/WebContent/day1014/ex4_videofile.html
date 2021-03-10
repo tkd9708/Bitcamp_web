@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload=function(){
+		document.getElementById("file").onchange=function(e){
+			//alert(this.files[0].name); // 방법1
+			//alert(e.target.files[0].name); // 방법2
+			
+			var file = e.target.files[0];
+			if(!file.type.match(/^video\/mp4$/)){ // 파일이 mp4가 아닐 시
+				document.getElementById("filename").innerHTML = "<b style='color:red'>mp4파일을 선택해주세요</b>";	
+			}
+			else{
+				document.getElementById("filename").innerHTML = "<b>" + file.name + "</b>";
+					
+			}
+			
+			// 동영상 가져오기
+			var reader = new FileReader();
+			// data url형식으로 파일 데이터 읽기
+			reader.readAsDataURL(file);
+			// 파일읽기의 진행상황
+			var s = document.getElementById("state");
+			// setInterval : 주기적으로 함수 호출
+			var h = window.setInterval(function() {
+				if(reader.readyState == reader.EMPTY){
+					s.textContent = "대기중";
+				}
+				else if (reader.readyState == reader.LOADING){
+					s.textContent = "로드중";
+				}
+				else if (reader.readyState == reader.DONE){
+					s.textContent = "완료";
+					
+					// VIDEO 요소의 src 지정
+					var v = document.getElementById("v");
+					v.src = reader.result;
+					v.load();
+					
+					// 타이머 해제
+					clearInterval(h);
+				}
+			}, 100);
+			
+		}
+	}
+</script>
+</head>
+<body>
+	<input type="file" id="file">
+	<hr>
+	<span id="state" style="font-size: 2em;">대기중</span>
+	<hr>
+	<h1 id="filename"></h1>
+	<video id="v" width="400" height="300" controls="controls"></video>
+</body>
+</html>

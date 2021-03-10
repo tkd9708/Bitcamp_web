@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+<style type="text/css">
+	button {
+		margin-left: 20px;
+		margin-top: 20px;
+	}
+	
+	table tr, table td {
+		text-align: center;
+	}
+
+</style>
+<script type="text/javascript">
+	$(function(){
+		$("#json_btn").click(function(){
+			$.ajax({
+				type: "get",
+				url: "../day1021/person_to_json.jsp",
+				dataType: "json",
+				success: function(data){
+					var s = "<table class = 'table table-striped' style='width:650px'>";
+
+					s += "<tr class='success'><td width='50' ><b>번호</b></td>";
+					s += "<td width='100'><b>이름</b></td>";
+					s += "<td width='100'><b>혈액형</b></td>";
+					s += "<td width='100'><b>java</b></td>";
+					s += "<td width='100'><b>spring</b></td>";
+					s += "<td width='100'><b>키</b></td>";
+					s += "<td width='100'><b>생년월일</b></td></tr>";
+					
+					$.each(data.person, function(i, elt) {
+						s += "<tr><td>" + (i+1) + "</td>";
+						s += "<td>" + elt.name + "</td>";
+						s += "<td>" + elt.blood.toUpperCase() + "형</td>";
+						s += "<td>" + elt.java + "점</td>";
+						s += "<td>" + elt.spring + "점</td>";
+						s += "<td>" + elt.height + "cm</td>";
+						s += "<td>" + elt.birth + "</td></tr>";
+					});
+					
+					
+					s += "</table>";
+					$("#out").html(s);
+				} 
+			});
+		});
+		
+		$("#xml_btn").click(function(){
+			$.ajax({
+				type: "get",
+				url: "../day1020/sawonxml.jsp",
+				dataType: "xml",
+				success: function(data){
+					var s = "<table class = 'table table-bordered' style='width:450px'>";
+					s += "<tr class='warning'><td width='50'><b>번호</b></td>";
+					s += "<td width='100'><b>이름</b></td>";
+					s += "<td width='100'><b>부서</b></td>";
+					s += "<td width='100'><b>급여</b></td>";
+					s += "<td width='100'><b>세금</b></td></tr>";
+					
+					$(data).find("item").each(function(i, ele) {
+						s += "<tr><td>" + (i+1) + "</td>";
+						s += "<td>" + $(ele).find("name").text() + "</td>";
+						s += "<td>" + $(ele).find("buseo").text() + "</td>";
+						s += "<td>" + $(ele).find("pay").text() + "</td>";
+						s += "<td>" + $(ele).find("tax").text() + "</td></tr>";
+					});
+					
+					s += "</table>";
+					$("#out").html(s);
+				}
+			});
+		});
+	});
+</script>
+</head>
+<body>
+	<button type="button" id="json_btn" class="btn-info">json 출력</button>
+	<button type="button" id="xml_btn" class="btn-success">xml 출력</button>
+	<hr>
+	<div id="out"></div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script type="text/javascript">
+	window.onload=function(){
+		
+		if(localStorage.id != undefined){
+			document.getElementById("id").value = localStorage.id;
+		}
+		
+		document.getElementById("frm").onsubmit=function(e){
+			e.preventDefault();
+		
+			var pass = document.getElementById("pass").value; 
+			localStorage.setItem("id", document.getElementById("id").value);
+			
+			if(pass == 1234){
+			
+				localStorage.setItem("password", pass);
+				
+				location.href="success.html";
+			}
+			else{
+				location.href="fail.html";
+			}
+			
+		}
+	}
+</script>
+</head>
+<body>
+	<form action="#" id="frm">
+		<fieldset id="login" style="width: 400px;">
+			<legend style="font-size: 40px">로그인</legend>
+	
+			아이디 : <input type="text" id="id" required="required"><br>
+			비밀번호 : <input type="password" id="pass" required="required"><br>
+			<input type="submit" value="로그인">
+			
+		</fieldset>
+	</form>
+	
+	
+</body>
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+	<img id="img1"><br>
+	<button type="button" id="btn1">이미지1</button>
+	<button type="button" id="btn2">이미지2</button>
+	<button type="button" id="btn3">이미지3</button>
+	<button type="button" id="btn4">점점크게</button>
+	<button type="button" id="btn5">점점작게</button>
+
+	<script type="text/javascript">
+	$("#img1").css({
+		"border" : "10px inset gold",
+		"width" : "300px"
+	});
+	
+	$("#btn1").click(function(){
+		$("#img1").attr("src", "../image2/01.png");
+	});
+	
+	$("#btn2").click(function(){
+		$("#img1").attr("src", "../image2/02.png");
+	});
+	
+	$("#btn3").click(function(){
+		$("#img1").attr("src", "../image2/03.png");
+	});
+	
+	$("#btn4").click(function(){
+		var w = parseInt($("#img1").css("width"));
+		// parsdInt(w, 10); >> 10진수로 바꾸기
+		w += 10;
+		$("#img1").css("width", w);
+	});
+	
+	$("#btn5").click(function(){
+		var w = parseInt($("#img1").css("width"));
+		
+		w -= 10;
+		$("#img1").css("width", w);
+	});
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="https://fonts.googleapis.com/css2?family=Gaegu&family=Handlee&family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+<style type="text/css">
+	div.img #myimg {
+		position: absolute;
+		left: 200px;
+		top: 30px;
+		text-align: center;
+		border: 5px dotted gray;
+		padding: 10px;
+	}
+	
+	div.img button {
+		margin-top: 35px;
+		margin-left: 10px;
+		font-size: 1.3em;
+		font-family: 'Gaegu';
+		color: white;
+		width: 150px;
+		height: 50px;
+		border: 3px solid black;
+		background-color: green;
+	}
+	
+	div.img button:hover {
+		background-color: orange;
+		cursor: pointer;
+	}
+</style>
+</head>
+<body>
+	<div class="img">
+		<button type="button" id="btnI">아이언맨</button><br>
+		<button type="button" id="btnS">슈퍼마리오</button><br>
+		<button type="button" id="btnL">루이지</button><br>
+		<button type="button" id="btnH">헐크</button><br>
+		<br><br>
+		<img src="../image/c1.png" width="300" id="myimg"> 
+	</div>
+	
+	<script type="text/javascript">
+		var myimg = document.getElementById("myimg");
+	
+		document.getElementById("btnI").onclick=function(){
+			myimg.setAttribute("src", "../image/c4.png");
+		}
+		
+		document.getElementById("btnS").onclick=function(){
+			myimg.setAttribute("src", "../image/c5.png");
+		}
+		
+		document.getElementById("btnL").onclick=function(){
+			myimg.setAttribute("src", "../image/c2.png");
+		}
+		
+		document.getElementById("btnH").onclick=function(){
+			myimg.setAttribute("src", "../image/c6.png");
+		}
+	
+	</script>
+</body>
+</html>

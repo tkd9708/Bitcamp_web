@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<style type="text/css">
+	#out {
+		position: absolute;
+		top: 60px;
+		left: 10px;
+		font-size: 14px;
+	}
+	
+	table thead tr {
+		height: 40px;
+		background-color: yellow;
+		color: blue;
+		font-size: 14px;
+	}
+	
+	table thead tr th {
+		border-bottom: 3px double gray;
+		border-right: 1px solid gray;
+	}
+	
+	table tbody tr, table tbody td {
+		border: 1px solid gray;
+		border-collapse: collapse;
+		font-size: 12px;
+		text-align: center;
+		height: 30px;
+	}
+</style>
+<script type="text/javascript">
+	var xhr;
+	
+	window.onload = function(){
+		
+		if(window.XMLHttpRequest){
+			xhr = new XMLHttpRequest();
+		}
+		else {
+			alert("Ajax를 지원하지 않는 브라우저입니다")
+		}
+		
+	 	document.getElementById("show").onclick=function(){
+	 		
+	 		xhr.open("get", "person_to_json.jsp", true);
+	 		xhr.onreadystatechange = function(){
+	 			if(xhr.readyState == 4){
+	 				if(xhr.status == 200){
+	 					var data = xhr.responseText;
+	 					var s = "<table><caption><h1>person Table</h1></caption><thead>";
+
+	 					s += "<tr><th width='70'>번호</th>";
+	 					s += "<th width='70'>이름</th>";
+	 					s += "<th width='70'>혈액형</th>";
+	 					s += "<th width='70'>java</th>";
+	 					s += "<th width='70'>spring</th>";
+	 					s += "<th width='70'>키</th>";
+	 					s += "<th width='100'>생년월일</th></tr></thead><tbody>";
+	 					
+	 					var parseData = JSON.parse(data);
+	 					for(i=0; i<parseData.person.length; i++){
+	 						s += "<tr><td>" + (i+1) + "</td>";
+	 						s += "<td>" + parseData.person[i].name + "</td>";
+	 						s += "<td>" + parseData.person[i].blood.toUpperCase() + "형</td>";
+	 						s += "<td>" + parseData.person[i].java + "점</td>";
+	 						s += "<td>" + parseData.person[i].spring + "점</td>";
+	 						s += "<td>" + parseData.person[i].height + "cm</td>";
+	 						s += "<td>" + parseData.person[i].birth + "</td></tr>";
+	 					}
+	 					s += "</tbody></table>";
+	 					document.getElementById("out").innerHTML = s;
+	 				}
+	 			}
+	 		}
+	 		xhr.send(null);
+	 	}
+		
+	}
+</script>
+
+</head>
+<body>
+	<button type="button" id="show">person Table 보기</button>
+	<div id="out"></div>
+</body>
+</html>

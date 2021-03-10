@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<style type="text/css">
+	/* ,는 ul과 li 동시에 적용 */
+	ul, li {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+	}
+	
+	/* 공백은 ul 태그의 li 하위태그에만 적용 */
+	ul li {
+		float: left;
+		width: 150px;
+		height: 50px;
+		line-height: 50px;
+		text-align: center;
+		border: 1px solid tomato;
+		margin: 0 5px; /* top left */
+	}
+	
+	.bg1{
+		background-color: tomato;
+		color: #fff;
+	}
+</style>
+</head>
+<body>
+	<ul>
+		<li>Home</li>
+		<li>Board</li>
+		<li>Guest</li>
+		<li>Shop</li>
+	</ul>
+</body>
+
+<script type="text/javascript">
+	// 메뉴에 마우스를 올리면 bg1이 적용, 벗어나면 제거
+	// hover 이용
+	/* $("li").each(function(index){
+		$("li:eq("+ index + ")").hover(function(){
+			$("li:eq("+ index + ")").addClass("bg1");
+		}, function(){
+			$("li:eq("+ index + ")").removeClass();
+		});
+	}); */
+	
+	$("ul li").hover(function(){
+		$(this).addClass("bg1");
+	}, function(){
+		$(this).removeClass("bg1");
+	});
+	
+	
+</script>
+</html>

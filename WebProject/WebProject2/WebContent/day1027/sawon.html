@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style type="text/css">
+	#buttons, #inputform, #updateform{
+		margin-left: 30px;
+		margin-top: 30px;
+		margin-bottom: 30px;
+	}
+	
+	a {
+		cursor: pointer;
+	}
+	
+	table {
+		margin-left: 30px;
+	}
+	
+	table tr th {
+		text-align: center;
+		color: white;
+	}
+	
+	table tr td {
+		text-align: center;
+	}
+	
+	.modal-header, h4, .close {
+    	background-color: #FFC95B;
+    	color:white !important;
+    	text-align: center;
+   	 	font-size: 30px;
+  	}
+  	.modal-footer {
+    	background-color: #FFC95B;
+  	}
+</style>
+<script type="text/javascript">
+	$(function(){
+		// 추가폼이랑 수정폼은 안보이게 처리
+		$("#inputform").hide();
+		$("#updateform").hide();
+		listData(); // 처음 시작시 기본 데이터 출력
+		
+		
+		// 사원정보추가 버튼을 누르면 폼이 보였다 안보였다하도록 하기
+		$("#btnform").click(function(){
+			//$("#inputform").toggle();	
+			$("#inputform").slideToggle('fast');
+		});	
+		
+		$("#btnadd").click(function(){
+			// 값 읽어오기
+			var name = $("#name").val();
+			var address = $("#address").val();
+			
+			// 이름, 주소 입력체크
+			if(name==''){
+				alert("이름을 입력해주세요");
+				$("#name").focus();
+				return;
+			}
+			
+			if(address==''){
+				alert("주소를 입력해주세요");
+				$("#address").focus();
+				return;
+			}
+			
+			// 운전면허, 성별 가져오기
+			var driver = $("input[name='driver']:checked").val(); // 체크한 값 가져오기
+			var gender = $("input[name='gender']:checked").val(); // 체크한 값 가져오기
+			var birthday = $("#birthday").val();
+			//alert(driver + gender + birthday);
+			
+			// 추가하는 함수 호출 - 읽은 변수가 지역변수라 함수 매개변수로 보낸다
+			addData(name, address, driver, gender, birthday);
+		});
+	
+		$(document).on("click", "button.delete", function(){
+			var num = $(this).attr("num");
+			//var ans = confirm("삭제하려면 확인을 눌러주세요");
+			
+			//if(ans == true){
+			
+			$("#dialog-confirm").dialog({
+				resizable : false,
+				height : "auto",
+				width : 400,
+				modal : true,
+				buttons : {
+					"예" : function() {
+						// 삭제하는 함수 호출
+						deleteData(num);
+						$(this).dialog("close");
+						
+					},
+					"아니오" : function() {
+						$(this).dialog("close");
+					}
+				}
+			}).css("display", "block"); //.css("visibility", "visible");-
+			
+ 
+		});
+
+		
+		$(document).on("click", "button.update", function() {
+			//$("#updateform").slideDown('slow');
+			 var num = $(this).attr("num");
+			 updateData(num);
+		});
+		
+		
+		
+
+		$("#up_btnupdate").click(function() {
+			var num = $("#up_num").val();
+			var name = $("#up_name").val();
+			var address = $("#up_address").val();
+
+			if (name == '') {
+				alert("이름을 입력해주세요");
+				$("#up_name").focus();
+				return;
+			}
+
+			if (address == '') {
+				alert("주소를 입력해주세요");
+				$("#up_address").focus();
+				return;
+			}
+
+			var driver = $("input[name='up_driver']:checked").val(); // 체크한 값 가져오기
+			var gender = $("input[name='up_gender']:checked").val(); // 체크한 값 가져오기
+			var birthday = $("#up_birthday").val();
+
+			$.ajax({
+				type : "post",
+				url : "sawonupdate.jsp",
+				dataType : "html",
+				data : {
+					"num" : num,
+					"name" : name,
+					"address" : address,
+					"driver" : driver,
+					"gender" : gender,
+					"birthday" : birthday
+				},
+				success : function(data) {
+					$("#myModal").modal("hide");
+					listData();
+					
+				}
+			});
+		});
+
+
+	}); // function close
+
+	// 사용자 함수들
+	
+	// 수정 함수
+	function updateData(num){
+		
+		$.ajax({
+			type : "get",
+			url : "sawongetdata.jsp",
+			dataType : "json",
+			data : {"num" : num},
+			success : function(data) {
+				$("#up_num").val(data.num);
+				$("#up_name").val(data.name);
+				
+				$("#up_address").val(data.address);
+				$("#up_birthday").val(data.birthday);
+				//var driver = "input[value='" + data.driver + "']";
+				$("input[value='" + data.driver + "']").prop("checked", true);
+				
+				//$("input[name='up_driver']").prop("checked", false);
+				var gender = "input[value='" + data.gender + "']";
+				$(gender).prop("checked", true);
+			}
+		});
+		
+		$("#myModal").modal();
+		
+	}
+	
+	// 삭제하는 함수
+	function deleteData(num){
+		//alert(num);
+		
+		$.ajax({
+			type : "get",
+			url : "sawondelete.jsp",
+			dataType : "html",
+			data : {"num" : num},
+			success : function(data) {
+				listData();
+			}
+		});
+	}
+	
+	// 데이터 추가
+	function addData(name, address, driver, gender, birthday) {
+		//alert(driver);
+
+		$.ajax({
+			type : "post",
+			url : "sawoninsert.jsp",
+			dataType : "html",
+			data : {
+				"name" : name,
+				"address" : address,
+				"driver" : driver,
+				"gender" : gender,
+				"birthday" : birthday
+			},
+			success : function(data) {
+				// 다시 출력하기
+				listData();
+
+				// 입력값 초기화
+				$("#name").val("");
+				$("#address").val("");
+			}
+		});
+	}
+
+	// 데이터 출력
+	function listData() {
+		$.ajax({
+			type : "get",
+			url : "sawonlist.jsp",
+			dataType : "xml",
+			success : function(data) {
+				var s = "";
+				s += "<table class='table table-bordered' style='width: 700px;'>";
+				s += "<caption><b>총 " + ($(data).find("sawon").length)
+						+ "명의 사원이 있습니다</b></caption>"
+				s += "<thead><tr bgcolor='orange'>";
+				s += "<th style='width: 60px;'>번호</th>";
+				s += "<th style='width: 80px;'>이름</th>";
+				s += "<th style='width: 80px;'>성별</th>";
+				s += "<th style='width: 100px;'>운전면허</th>";
+				s += "<th style='width: 120px;'>주소</th>";
+				s += "<th style='width: 100px;'>생년월일</th>";
+				s += "<th style='width: 120px;'>관리</th></tr></thead><tbody>";
+
+				$(data).find("sawon").each(function(i, element) {
+				
+					s += "<tr class='tr_btn'>";
+					var num = $(element).attr("num");
+					s += "<td>" + (i+1) + "</td>";
+					s += "<td>" + $(element).find("name").text() + "</td>";
+					s += "<td>" + $(element).find("driver").text() + "</td>";
+					s += "<td>" + $(element).find("gender").text() + "</td>";
+					s += "<td>" + $(element).find("address").text() + "</td>";
+					s += "<td>" + $(element).find("birthday").text() + "</td>";
+					s += "<td><button type='button' class='update btn btn-info btn-xs' num='" + num + "'>수정</button>";
+					s += "&nbsp;&nbsp;";
+					s += "<button type='button' class='delete btn btn-danger btn-xs' num='" + num +"'>삭제</button></td>";
+					s += "</tr>";
+				});
+
+				s += "</tbody></table>"
+				$("#sawonlist").html(s);
+			}			
+		});
+	}
+</script>
+</head>
+<body>
+	<!-- 삭제시 나타날 다이얼로그 -->
+	<div id="dialog-confirm" title="사원 삭제" style="display: none"> <!-- style="visibility: hidden"도 가능 -->
+		<p>
+			<span class="ui-icon ui-icon-alert"
+				style="float: left; margin: 12px 12px 20px 0;"></span>
+				현재 사원데이터를 삭제하시겠습니까?
+		</p>
+	</div>
+	<div id="buttons">
+		<button type="button" id="btnform" class="btn btn-sm btn-warning" style="width:150px;">사원정보추가</button>
+	</div>
+	<div id="inputform">
+		<table class="table table-bordered" style="width: 400px;">
+			<caption><b>사원 정보 추가</b></caption>
+			<tr>
+				<th bgcolor="cyan" style="width:100px;">이름</th>
+				<td>
+					<input type="text" id="name" style="width: 100px;" class="form-control input-sm">
+				</td>
+			</tr>
+			<tr>
+				<th bgcolor="cyan" style="width:100px;">운전면허</th>
+				<td>
+					<input type="radio" name="driver" value="없음" checked="checked"> 없음 
+					<input type="radio" name="driver" value="2종보통"> 2종보통 
+					<input type="radio" name="driver" value="1종보통"> 1종보통 
+				</td>
+			</tr>
+			<tr>
+				<th bgcolor="cyan" style="width:100px;">성별</th>
+				<td>
+					<input type="radio" name="gender" value="남자" checked="checked"> 남자 
+					<input type="radio" name="gender" value="여자"> 여자
+				</td>
+			</tr>ㅐ
+			<tr>
+				<th bgcolor="cyan" style="width:100px;">주소</th>
+				<td>
+					<input type="text" id="address" style="width: 250px;" class="form-control input-sm">
+				</td>
+			</tr>
+			<tr>
+				<th bgcolor="cyan" style="width:100px;">생년월일</th>
+				<td>
+					<input type="date" id="birthday" value="2020-10-10" class="form-control input-sm">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<button type="button" class="btn btn-sm btn-danger" id="btnadd">오라클에 사원정보 저장하기</button>
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div class="container">
+
+  		<!-- Modal -->
+  		<div class="modal fade" id="myModal" role="dialog">
+  		<input type="hidden" id="up_num" value="">
+    		<div class="modal-dialog">
+    
+      			<!-- Modal content-->
+      			<div class="modal-content">
+        			<div class="modal-header" style="padding:35px 50px;">
+          				<button type="button" class="close" data-dismiss="modal">&times;</button>
+          				<h4> 사원정보수정 </h4>
+        			</div>
+        			<div class="modal-body" style="padding:40px 50px;">
+          				<form role="form">
+            			<div class="form-group">
+              				<label for="lname"><span class="glyphicon glyphicon-user"></span> 이름</label>
+              				<input type="text" id="up_name" style="width: 100px;" class="form-control input-sm">
+            			</div>
+            			<div class="form-group">
+              				<label for="ldriver"><span class="glyphicon glyphicon-plane"></span> 운전면허</label><br>
+              				<input type="radio" name="up_driver" value="없음" checked="checked"> 없음 
+							<input type="radio" name="up_driver" value="2종보통"> 2종보통 
+							<input type="radio" name="up_driver" value="1종보통"> 1종보통 
+            			</div>
+            			<div class="form-group">
+              				<label for="lgender"><span class="glyphicon glyphicon-user"></span> 성별</label><br>
+              				<input type="radio" name="up_gender" value="남자" checked="checked"> 남자 
+							<input type="radio" name="up_gender" value="여자"> 여자
+            			</div>
+            			<div class="form-group">
+              				<label for="ladr"><span class="glyphicon glyphicon-home"></span> 주소</label>
+              				<input type="text" id="up_address" style="width: 250px;" class="form-control input-sm">
+            			</div>
+            			<div class="form-group">
+              				<label for="lbirth"><span class="glyphicon glyphicon glyphicon-calendar"></span> 생년월일</label>
+              				<input type="date" id="up_birthday" value="2020-10-10" class="form-control input-sm">
+            			</div>
+              			<button type="button" class="btn btn-success btn-block" id="up_btnupdate"><span class="glyphicon glyphicon-refresh"></span> 수정</button>
+          				</form>
+        			</div>
+        			<div class="modal-footer">
+          				<button type="button" class="btn btn-danger btn-default pull-left" data-dismiss="modal">
+          				<span class="glyphicon glyphicon-remove"></span> Cancel</button>
+        			</div>
+      			</div>
+      
+    		</div>
+  		</div> 
+	</div>
+	<!-- <div id="updateform">
+		<input type="hidden" id="up_num" value="">
+		<table class="table table-bordered" style="width: 400px;">
+			<caption><b>사원 정보 수정</b></caption>
+			<tr>
+				<th bgcolor="cyan" style="width:100px;">이름</th>
+				<td>
+					<input type="text" id="up_name" style="width: 100px;" class="form-control input-sm">
+				</td>
+			</tr>
+			<tr>
+				<th bgcolor="cyan" style="width:100px;">운전면허</th>
+				<td>
+					<input type="radio" name="up_driver" value="없음" checked="checked"> 없음 
+					<input type="radio" name="up_driver" value="2종보통"> 2종보통 
+					<input type="radio" name="up_driver" value="1종보통"> 1종보통 
+				</td>
+			</tr>
+			<tr>
+				<th bgcolor="cyan" style="width:100px;">성별</th>
+				<td>
+					<input type="radio" name="up_gender" value="남자" checked="checked"> 남자 
+					<input type="radio" name="up_gender" value="여자"> 여자
+				</td>
+			</tr>
+			<tr>
+				<th bgcolor="cyan" style="width:100px;">주소</th>
+				<td>
+					<input type="text" id="up_address" style="width: 250px;" class="form-control input-sm">
+				</td>
+			</tr>
+			<tr>
+				<th bgcolor="cyan" style="width:100px;">생년월일</th>
+				<td>
+					<input type="date" id="up_birthday" value="2020-10-10" class="form-control input-sm">
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<button type="button" class="btn btn-sm btn-danger" id="up_btnupdate">수정 완료</button>
+					<button type="button" class="btn btn-sm btn-info" id="up_btnback">취소</button>
+				</td>
+			</tr> 
+		</table>
+  	</div> -->
+	<div id="sawonlist">
+		목록
+	</div>
+</body>
+</html>

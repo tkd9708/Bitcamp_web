@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+</head>
+<body>
+	<input type="text" id="txtcode">
+	<br>
+	<button type="button" id="btn1">HTML형태로 넣기</button>
+	<button type="button" id="btn2">Text형태로 넣기</button>
+	<br>
+	<div id="result" style="font-size: 20px"></div>
+	<script type="text/javascript">
+		var s="";
+		$("#btn1").click(function(){
+			// 입력한 문장 읽어오기
+			s += $("#txtcode").val() + "<br>";
+			
+			// 결과창에 HTML형태로 넣어주기
+			$("#result").html(s);
+			
+			// 기존 html코드 얻은후 추가하기
+			/* var ss=$("#result").html()+"<br>";
+			$("#result").html(ss+s);
+			 */
+			 
+			//입력창 초기화
+			//$("#txtcode").val('');
+		});
+		
+		$("#btn2").click(function(){
+			// 입력한 문장 읽어오기
+			var s = $("#txtcode").val();
+			
+			// 결과창에 Text형태로 넣어주기
+			$("#result").text(s);
+			
+			//입력창 초기화
+			$("#txtcode").val('');
+		});
+	</script>
+</body>
+</html>

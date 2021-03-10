@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<style type="text/css">
+	div.tooltip{
+		line-height: 1.5;
+		color: white;
+		width: 200px;
+		background-color: #f90;
+		border: 2px solid white;
+		padding: 1em;
+		font-size: 10px;
+		border-radius: 30px;	
+	}
+	
+	b.view{
+		cursor: pointer;
+	}
+</style>
+<script type="text/javascript">
+	$(function(){
+		$("div.tooltip").css({
+			opacity: "0.9",
+			position: "absolute",
+			display: "none"
+		});
+		
+		$("a").bind({
+			mouseover: function(){
+				$("div.tooltip").fadeIn();
+			},
+			mouseout: function(){
+				$("div.tooltip").fadeOut();
+			},
+			mousemove: function(e){
+				$("div.tooltip").css({
+					top: e.pageY + 10 + "px",
+					left: e.pageX + 10 + "px"
+				});
+			}
+		});
+	
+		$("b.view").bind({
+			mouseover: function(){
+				$("div.tooltip").fadeIn();
+			},
+			mouseout: function(){
+				$("div.tooltip").fadeOut();
+			},
+			mousemove: function(e){
+				$("div.tooltip").css({
+					top: e.pageY + 10 + "px",
+					left: e.pageX + 10 + "px",
+					fontSize: "25px"
+				});
+				$("div.tooltip").text($(this).text());
+			}
+		});
+	});
+</script>
+</head>
+<body>
+	<h3>tooltip 링크 부분에 마우스를 올려보세요</h3>
+	<a style="font-size: 20px;">tooltip</a>
+	<pre>
+		연구팀은 실험군 대상자에 6개월 동안 하루에 3차례 20분씩 껌을 씹도록 했다. 
+		이후 각종 장비를 동원해 얼굴 모양 변화 여부를 들여다봤다.
+
+		연구팀은 <b class="view">"껌 저작에 의한 아래턱의 크기 및 형태 등의 변화는 없었다"</b>며 
+		<b class="view">"장기적인 껌 씹기는 얼굴 모양에는 영향을 주지 않지만 저작 기능과는 연관성이 있다는 것"</b>이라고 밝혔다.
+	</pre>
+	<div class="tooltip">
+		Java<br>
+		Oracle<br>
+		HTML5<br>
+		JavaScript<br>
+		jQuery<br>
+	</div>
+</body>
+</html>

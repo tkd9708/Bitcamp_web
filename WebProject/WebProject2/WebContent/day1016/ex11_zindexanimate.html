@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<style type="text/css">
+	#wall {
+		position: absolute;
+		left: 200px;
+		width: 500px;
+		z-index:2;
+	}
+	
+	#chick {
+		position: absolute;
+		left: 130px;
+		top: 150px;
+		z-index:1;
+	}
+</style>
+<script type="text/javascript">
+	$(function(){
+		$("#chick").click(function(){
+			$(this).animate({left: '+=600'}, 'slow').delay(1000);
+			
+			$(this).animate({left: '-=600'}, 'slow');
+
+		});
+	});
+</script>
+</head>
+<body>
+	<img alt="" src="../image2/bg2.png" id="wall">
+	<img alt="" src="../image2/chick.gif" id="chick">
+</body>
+</html>

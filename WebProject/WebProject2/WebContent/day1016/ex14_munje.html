@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+<style type="text/css">
+ 	@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
+	h1 {
+		cursor: pointer;
+		font-family: 'Indie Flower';
+		font-size: 20px;
+		opacity: 0.5;
+	}
+	
+	#music1 {
+		position: absolute;
+		left: 220px;
+		top: 60px;
+		z-index:5;
+	}
+	
+	#music2 {
+		position: absolute;
+		left: 210px;
+		top: 100px;
+		z-index:5;
+	}
+	
+	#music3 {
+		position: absolute;
+		left: 220px;
+		top: 140px;
+		z-index:5;
+	}
+	
+	.music{
+		position: absolute;
+		left: 100px;
+		top: 100px;
+		width: 300px;
+		height: 300px;
+	}
+	
+	#cd1 {
+		
+		background-image: url('../image2/cd-sprite.png'); 
+		background-size: 300px 900px;
+		z-index: 1;
+	}
+	
+	#cd2 {
+		background-image: url('../image2/cd-sprite.png'); 
+		background-position: left center;
+		background-size: 300px 900px;
+		z-index: 1;
+	}
+	
+	#cd3 {
+		background-image: url('../image2/cd-sprite.png'); 
+		background-position: left bottom;
+		background-size: 300px 900px;
+		z-index: 1;
+	}  
+	
+	#cd {
+		position: absolute;
+		z-index:3;
+	}
+</style>
+</head>
+<body>
+	<img alt="" src="../image2/cover.png" id="cd" width=500px>
+	<h1 id="music1">Lost Stars</h1>
+	<h1 id="music2">A Higher Place</h1>
+	<h1 id="music3">Like A Fool</h1>
+	<div id="cd1" class="music"></div>
+	<div id="cd2" class="music"></div>
+	<div id="cd3" class="music"></div>
+	
+	<script type="text/javascript">
+		
+		$("#music1").click(function(){
+			var b = false;
+			
+			if(parseInt($("#cd1").css("left"))!=100){
+				$("#cd1").animate({left:'-=300'},'fast');
+				b = true;
+			}
+			else if(parseInt($("#cd2").css("left"))!=100){
+				$("#cd2").animate({left:'-=300'},'fast');
+			}
+			else if(parseInt($("#cd3").css("left"))!=100){
+				$("#cd3").animate({left:'-=300'},'fast');
+			}
+			
+			if(!b) 
+				$("#cd1").animate({left:'+=300'},'slow');
+			
+		});
+		
+		$("#music2").click(function(){
+			var b = false;
+			
+			if(parseInt($("#cd1").css("left"))!=100){
+				$("#cd1").animate({left:'-=300'},'fast');
+			}
+			else if(parseInt($("#cd2").css("left"))!=100){
+				$("#cd2").animate({left:'-=300'},'fast');
+				b = true;
+			}
+			else if(parseInt($("#cd3").css("left"))!=100){
+				$("#cd3").animate({left:'-=300'},'fast');
+			}
+			
+			if(!b)
+				$("#cd2").animate({left:'+=300'},'slow');
+			
+		});
+		
+		$("#music3").click(function(){	
+			var b = false;
+			
+			if(parseInt($("#cd1").css("left"))!=100){
+				$("#cd1").animate({left:'-=300'},'fast');
+			}
+			else if(parseInt($("#cd2").css("left"))!=100){
+				$("#cd2").animate({left:'-=300'},'fast');
+			}
+			else if(parseInt($("#cd3").css("left"))!=100){
+				$("#cd3").animate({left:'-=300'},'fast');
+				b = true;
+			}
+			
+			if(!b)
+				$("#cd3").animate({left:'+=300'},'slow');
+		}); 
+		
+	</script>
+</body>
+</html>

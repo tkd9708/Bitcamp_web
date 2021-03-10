@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<style type="text/css">
+	table {
+		border: 2px solid gray;
+		width: 200px;
+	}
+	
+	table th, table td {
+		border-bottom: 1px solid gray;
+		border-right: 1px solid gray;
+	}
+</style>
+
+</head>
+<body>
+	<table>
+		<tr>
+			<th>번호</th><th>색상</th>
+			<script type="text/javascript">
+				var colorArray = ['red', 'green', 'magenta', 'gray', 'cyan'];
+				for(i=0; i< colorArray.length; i++){
+					var s = "<tr><td>" + (i+1) + "</td><td bgcolor='" + colorArray[i] +"'>" + colorArray[i] + "</td></tr>"; 
+					document.write(s);
+				}
+			</script>
+		</tr>
+	</table>
+</body>
+</html>
